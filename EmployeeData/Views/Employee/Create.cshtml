@@ -1,0 +1,69 @@
+﻿@model EmployeeData.Models.EmployeeViewModel
+
+<style>
+ .mb-3{
+        border: 1px outset red;
+        background-color: lightblue;
+     }
+
+body {
+    background-image: url('https://thumbs.dreamstime.com/z/employee-name-plate-wooden-nameplate-text-isolated-white-45724013.jpghttps://thumbs.dreamstime.com/z/blank-name-plate-11893990.jpg');
+     }
+
+</style>
+@{
+    ViewData["Title"] = "Create Employee";
+    var errorMessage = TempData["errorMessage"]?.ToString();
+}
+
+<h3>@ViewData["Title"]</h3>
+<hr/>
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger">
+        <strong>Error!</strong>@errorMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<from action="Create" method="post" autocomplete="off">
+    <div class="mb-3">
+        <label for="FirstName" class="form-label">First name:</label>
+        <input type="text" id="FirstName" class="form-control">
+        
+    </div>
+    <div class="mb-3">
+        <label for="LastName" class="form-label">Last Name:</label>
+        <input type="text" id="LastName" class="form-control">
+        
+    </div>
+    <div class="mb-3">
+        <label for="DateOfBirth" class="form-label">Date Of Birth:</label>
+        <input type="date" id="DateOfBirth" class="form-control">
+  
+    </div>
+    <div class="mb-3">
+        <label for="Email" class="form-label">E-mail:</label>
+        <input type="text" id="Email" class="form-control">
+     
+    </div>
+    <div class="mb-3">
+        <label for="Salary" class="form-label">Salary:</label>
+        <div class="input-group">
+            <span class="input-group-text">$</span>
+            <input type="text" id="Salary" class="form-control">
+        </div>
+        
+        </div>
+        <div class="d-grid">
+        @using (Html.BeginForm("Create", "Employee"))
+        {
+            <button type="submit" class="btn btn-primary"> Submit</button>
+        }
+        </div>
+</from>
+
+@*@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}*@

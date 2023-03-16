@@ -1,0 +1,96 @@
+﻿@model List<EmployeeData.Models.EmployeeViewModel>
+<style>
+    th,td,tr
+    {
+        border:solid 4px slateblue;
+        font-family:Courier;
+    }
+    body
+    { 
+        
+        background-image: url();
+    }
+    .btn-primary
+    {
+        background-color:darkslateblue;
+        border-radius: 4px;
+        margin:5px;
+        width:50px
+    }
+    .btn-danger
+    {
+        border-radius:4px;
+        margin:5px;
+        width: 70px;
+    }
+</style>
+@{
+    ViewData["Title"] = "Employee Details";
+    var succesMessage = TempData["succesMessage"]?.ToString();
+    var errorMessage = TempData["errorMessage"]?.ToString();
+}
+<h2 style="font-family:Algerian; color:firebrick; text-align:center;">@ViewData["Title"]</h2>
+<hr />
+@if (!string.IsNullOrWhiteSpace(@succesMessage))
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong>@succesMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+    </div>   
+}
+else if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger">
+        <strong>Error!</strong>@errorMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+    </div>
+}
+<form>
+    <button asp-action="Create" asp-controller="Employee" style="background-color:skyblue; border-radius:5px; margin:5px;">Create Employee</button>
+    <table class="table table-responsive table-hover table-bordered">
+        <thead>
+            <tr class="table-active">
+                <th class="text-center">Id</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Date Of Birth</th>
+                <th class="text-center">E-Mail</th>
+                <th class="text-center">Salary</th>
+                <th class="text-center">Action</th>
+            </tr> 
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var employee in Model)
+                { 
+                    <tr>
+                        <td class="text-center"><b>@employee.Id</b></td>
+                        <td><b>@employee.FullName</b></td>
+                        <td class="text-center"><b>@employee.DateOfBirth.ToString("yyyy/dd/mm")</b></td>
+                        <td><b>@employee.Email</b></td>
+                        <td class="text-end"><b>@employee.Salary</b></td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-sm" >
+                                <a asp-controller="Employee" asp-action="Edit" asp-route-Id="@employee.Id" class="btn-primary">Edit</a>
+                                <a asp-controller="Employee" asp-action="Delete" asp-route-Id="@employee.Id" class="btn-danger">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                   
+                }
+
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6">
+                        <div>
+                            No Employees available at this movement!
+                        </div>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
